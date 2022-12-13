@@ -1,4 +1,4 @@
-package proiectTehnologiiMobile;
+package dbPackage;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -6,7 +6,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 //import java.sql.Statement;
 
-public class dbCon {
+public class DbCon {
 	
 	Connection connection = null;
 	static final String dataBase = "spotifywannabe";

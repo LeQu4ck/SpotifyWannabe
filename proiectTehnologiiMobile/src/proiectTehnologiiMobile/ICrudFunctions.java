@@ -4,8 +4,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public interface ICrudFunctions {
-	void CreateSong() throws SQLException;
+	void CreateSong(Song s) throws SQLException;
 	ArrayList<Song> ReadSongs() throws SQLException;
-	void DeleteSong();
+	void DeleteSong(int songID) throws SQLException;
 	//void EditSong();
 }
