@@ -165,7 +165,7 @@ public class Song {
 	@Override
 	public String toString() {
 		return "Song  " + songID + ":" + "\n" + "Artist: " + artist + "\n" + "Title: " + title + "\n" + "Duration: " + duration + "\n"
-				+ "Song type:" + songType + "\n" + "Link: " + link;
+				+ "Song type: " + songType + "\n" + "Link: " + link;
 	}
 
 }

@@ -1,5 +1,9 @@
 package proiectTehnologiiMobile;
 
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 //import java.io.File;
 //import java.util.regex.*;
 //import java.io.File;
@@ -11,115 +15,127 @@ import java.sql.SQLException;
 //import java.util.ArrayList;
 //import java.util.List;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Random;
 import java.util.Scanner;
 
 public class app implements ICrudFunctions {
 
-	public static void main(String[] args) throws SQLException {
-		// TODO Auto-generated method stub
+	public static HashSet<Song> getRandomElement(ArrayList<Song> list, int totalItems) {
+		Random rand = new Random();
 
-		ICrudFunctions crudFunc = new CrudFunctions();
+		HashSet<Song> newList = new HashSet<>(totalItems);
+		while (newList.size() != totalItems) {
+
+			int randomIndex = rand.nextInt(list.size());
+
+			newList.add(list.get(randomIndex));
+		}
+		return newList;
+	}
+	
+//	  public static ArrayList<Song> citireCantece() throws SQLException { 
+//		  ICrudFunctions crudFunc = new CrudFunctions(); 
+//		  ArrayList<Song> songList = new ArrayList<Song>(); 
+//		  songList = crudFunc.ReadSongs();
+//	  return  songList;
+//	 }
+//	  public static void afisareListaCantece() throws SQLException {
+//		  
+//		  ArrayList<Song> songList = citireCantece();
+//		  for(Song s: songList) {
+//			  System.out.println(s);
+//		  }
+//	  }
+//	 
+
+	public static void main(String[] args) throws SQLException, IOException, URISyntaxException, InterruptedException {
+		// TODO Auto-generated method stub
 		Scanner sc1 = new Scanner(System.in);
 		Scanner sc2 = new Scanner(System.in);
-//		System.out.println("Tastati 1 pt. introducere, " + "2 pt. stergere, " + "3 pt. afisare lista cantece"
-//				+ " 0 pt. iesire din aplicatie.");
+		Scanner randomPlaylist = new Scanner(System.in);
+		
+		ICrudFunctions crudFunc = new CrudFunctions();
+		
+		Playlist generatedPlaylist = new Playlist(null);
+		ArrayList<Song> songList = new ArrayList<Song>();
 
-		int function=-2;
-//		while (function != 0) {
-//			function = sc.nextInt();
-//			switch (function) {
-//			case 1:
-//				System.out.println("Introducere detalii melodie:");
-//				crudFunc.CreateSong();
-//
-//				break;
-//			case 2:
-//				System.out.println("Stergere");
-//				System.out.println("Alege numarul melodiei pe care vrei sa o stergi");
-//				int songID = sc.nextInt();
-//				crudFunc.DeleteSong(songID);
-//
-//				break;
-//			case 3:
-//				System.out.println("Afisare lista cantece.");
-//				
-//				ArrayList<Song> songList = crudFunc.ReadSongs();
-//				for(Song s: songList) {
-//					System.out.println(s);
-//				}
-//
-//				break;
-//			case 0:
-//				System.out.println("Inchidere aplicatie...");
-//				function = 0;
-//				break;
-//			}
-//		}
-//		
+		songList = crudFunc.ReadSongs();
+
+		int function = -2;
+
 		do {
-			
-			String menu = "Tastati 1 pt. afisare lista cantece, " + "2 pt. stergere, " + "3 pt. introducere"
-					+ " 0 pt. iesire din aplicatie.";
+			String menu = "Tastati 1 pt. afisare lista cantece, " + "2 pt. stergere, " + "3 pt. introducere, "
+					+ "4 pt. generare playlist random, " + "5 pt. redare Playlist " + " 0 pt. iesire din aplicatie.";
 			System.out.print(menu);
-			//System.out.println("function"+function);
+			// System.out.println("function"+function);
 			function = sc1.nextInt();
-			
+
 			switch (function) {
 
 			case 1:
-				ArrayList<Song> songList = crudFunc.ReadSongs();
-				for (Song s : songList) {
+				songList = crudFunc.ReadSongs();
+				for(Song s: songList) {
 					System.out.println(s);
 				}
-
 				break;
-				
+
 			case 2:
+				System.out.println("Alege numarul cantecului pe care vreti sa-l stergeti: ");
 				int songID = sc1.nextInt();
 				crudFunc.DeleteSong(songID);
+				songList = crudFunc.ReadSongs();
 				break;
 			case 3:
 				System.out.println("Introduceti artistul:");
 				String artist = sc2.nextLine();
 
-				System.out.println("Introduceti titlul:" );
-		
+				System.out.println("Introduceti titlul:");
+
 				String title = sc2.nextLine();
 
 				System.out.println("Introduceti durata:");
 				String durata = sc2.next();
 
-				System.out.println("Introduceti genul:" );
+				System.out.println("Introduceti genul:");
 				String genre = sc2.next();
 
-				System.out.println("Introduceti link-ul:" );
+				System.out.println("Introduceti link-ul:");
 				String link = sc2.next();
-				
+
 				Song s = new Song(artist, title, Double.valueOf(durata), genre, link);
-				if(s.validate()) {
+				if (s.validate()) {
 					crudFunc.CreateSong(s);
-				}else {
+				} else {
 					System.out.println("Verificati valorile introduse!");
 				}
 				break;
 			case 4:
-				System.out.println("Option 4");
+				System.out.println("Specificati lungimea playlist-ului ");
+				int numberOfTracks = randomPlaylist.nextInt();
+			    generatedPlaylist.setPlaylist(getRandomElement(songList, numberOfTracks));
+				for (Song song : generatedPlaylist.getPlaylist()) {
+					System.out.println(song);
+				}
 				break;
 			case 5:
-				System.out.println("Option 5");
+				
+				for(Song sng: generatedPlaylist.getPlaylist()) {
+					String uri = sng.getLink();
+					if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+					    Desktop.getDesktop().browse(new URI(uri));
+					}
+					Thread.sleep(5000);
+				}
 				break;
 			case 0:
 				function = 0;
-				// System.out.println("Wrong option");
-				break; // I always use this break, even when not needed.
+				break; 
 			}
 		} while (function != 0);
 		sc1.close();
 		sc2.close();
-
-//		Song sg = new Song("ads", "asdasd", 43.2,"fadsf","asdsa");
-//
-//		System.out.println(sg);
+		randomPlaylist.close();
 
 	}
 
