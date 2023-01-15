@@ -73,4 +73,9 @@ public class Playlist {
 		
 	}
 
+	@Override
+	public String toString() {
+		return "Playlist [songlist=" + songlist + ", playListName=" + playListName + ", id=" + id + "]";
+	}
+
 }

@@ -1,10 +1,12 @@
 package proiectTehnologiiMobile;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class PlaylistService implements IPlaylistService{
@@ -41,6 +43,44 @@ public class PlaylistService implements IPlaylistService{
 			System.out.println("ERROR while executing select query!");
 			System.out.println(e.toString());
 		}
+	}
+	@Override
+	public ArrayList<Playlist> ReadPlaylist() throws SQLException {
+		Connection con = db.connect();
+		ArrayList<Playlist> playlists = new ArrayList<Playlist>();
+		HashSet<Song> songList = new HashSet<Song>();
+		try {
+
+			CallableStatement cstmt = con.prepareCall("{call get_PlayLists()}");
+			ResultSet set = cstmt.executeQuery();
+			
+			while (set.next()) {
+			    int playlistID = set.getInt("playlistId");
+			    String name = set.getString("name");
+			    int songID = set.getInt("songID");
+			    String artist = set.getString("artist");
+			    String title = set.getString("title");
+			    int duration = set.getInt("duration");
+			    String genre = set.getString("genre");
+			    String link = set.getString("link");
+
+			    Song song = new Song(songID,artist, title, duration, genre, link);
+			  
+			    if (playlists.isEmpty() || playlists.get(playlists.size() - 1).getId() != playlistID) {
+			        
+			        songList.add(song);
+			        Playlist playlist = new Playlist(playlistID, name, songList);
+			        playlists.add(playlist);
+			    } else {
+			        playlists.get(playlists.size() - 1).getPlaylist().add(song);
+			}
+			}
+			 
+		} catch (SQLException e) {
+			System.out.println("ERROR while executing select query!");
+			System.out.println(e.toString());
+		}
+		return playlists;
 	}
 	
 }

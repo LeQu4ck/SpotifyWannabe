@@ -22,8 +22,16 @@ public class app implements ISongService {
 					
 		Playlist generatedSongList = new Playlist();
 		ArrayList<Song> songList = new ArrayList<Song>();
+		ArrayList<Playlist> playList = new ArrayList<Playlist>();
+		
+		
 
+		playList = playlistService.ReadPlaylist();
 		songList = songService.ReadSongs();
+		
+		for(Playlist p: playList) {
+			System.out.println(p);
+		}
 
 		int function = -2;
 
@@ -33,6 +41,7 @@ public class app implements ISongService {
 			System.out.print(menu);
 			// System.out.println("function"+function);
 			function = sc1.nextInt();
+			sc1.nextLine();
 
 			switch (function) {
 
@@ -50,38 +59,40 @@ public class app implements ISongService {
 				songList = songService.ReadSongs();
 				break;
 			case 3:
-				System.out.println("Introduceti artistul:");
+				System.out.print("Introduceti artistul: ");
 				String artist = sc2.nextLine();
 
-				System.out.println("Introduceti titlul:");
-
+				System.out.print("Introduceti titlul:");
 				String title = sc2.nextLine();
 
-				System.out.println("Introduceti durata:");
+				System.out.print("Introduceti durata:");
 				String durata = sc2.next();
 
-				System.out.println("Introduceti genul:");
+				System.out.print("Introduceti genul:");
 				String genre = sc2.next();
 
-				System.out.println("Introduceti link-ul:");
+				System.out.print("Introduceti link-ul:");
 				String link = sc2.next();
-
+				
+				sc2.nextLine();
 				Song s = new Song(artist, title, Integer.parseInt(durata), genre, link);
 				if (s.validate()) {
 					songService.CreateSong(s);
 				} else {
-					System.out.println("Verificati valorile introduse!");
+					System.out.print("Verificati valorile introduse!");
 				}
 				break;
 			case 4:
-				System.out.println("Specificati lungimea playlist-ului ");
+				System.out.print("Specificati lungimea playlist-ului ");
 				int numberOfTracks = randomPlaylist.nextInt();
+				randomPlaylist.nextLine();
 				
-				System.out.println("Alegeti un nume pentru playlist ");
+				System.out.print("Alegeti un nume pentru playlist ");
+				//randomPlaylist.next();
 				String playlistName = randomPlaylist.nextLine();
 				
 				generatedSongList.getRandomPlaylist(songList, numberOfTracks);
-				playlistService.CreatePlaylist(playlistName, generatedSongList.getPlaylist());
+     			playlistService.CreatePlaylist(playlistName, generatedSongList.getPlaylist());
 
 				break;
 			case 5:

@@ -60,7 +60,7 @@ public class Song {
 		this.title = title;
 	}
 
-	public double getDuration() {
+	public int getDuration() {
 		return duration;
 	}
 
@@ -113,12 +113,11 @@ public class Song {
 		return false;
 	}
 
-	public boolean validateDuration(Double s) {
-		String patternString = "^[+]?(0|[1-9]\\d*)?$";
+	public boolean validateDuration(String s) {
+		String patternString = "^[+]?(0|[1-9]\\d*)$";
 		Pattern pattern = Pattern.compile(patternString);
 
-		String durata = s.toString();
-		Matcher matcher = pattern.matcher(durata);
+		Matcher matcher = pattern.matcher(s);
 		boolean matches = matcher.matches();
 		if (matches) {
 			return true;
@@ -150,7 +149,7 @@ public class Song {
 	}
 
 	public boolean validate() {
-		if (validateArtistName(this.getArtist()) && validateTitle(this.getTitle()) && validateDuration(this.getDuration())
+		if (validateArtistName(this.getArtist()) && validateTitle(this.getTitle()) && validateDuration(String.valueOf(this.getDuration()))
 				&& validateGenre(this.getSongType()) && validateYtLink(this.getLink())) {
 			return true;
 		}

@@ -24,7 +24,7 @@ public class SongService implements ISongService {
 
 			String artist = s.getArtist();
 			String title = s.getTitle();
-			Double durata = s.getDuration();
+			String durata = String.valueOf(s.getDuration());
 			String genre = s.getSongType();
 			String link = s.getLink();
 
@@ -34,7 +34,7 @@ public class SongService implements ISongService {
 
 			statement.setString(1, artist);
 			statement.setString(2, title);
-			statement.setDouble(3, Double.valueOf(durata));
+			statement.setDouble(3, Integer.valueOf(durata));
 			statement.setString(4, genre);
 			statement.setString(5, link);
 
