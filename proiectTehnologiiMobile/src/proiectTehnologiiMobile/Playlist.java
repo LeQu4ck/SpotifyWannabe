@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Random;
 
 public class Playlist {
-	
+
 	private HashSet<Song> songlist;
 	private String playListName;
 	private int id;
@@ -27,6 +27,7 @@ public class Playlist {
 		this.playListName = playListName;
 		this.songlist = songlist;
 	}
+
 	public Playlist() {
 		songlist = new HashSet<Song>();
 	}
@@ -34,18 +35,19 @@ public class Playlist {
 	public String getPlayListName() {
 		return playListName;
 	}
+
 	public void setPlayListName(String playListName) {
 		this.playListName = playListName;
 	}
-	
+
 	public HashSet<Song> getPlaylist() {
 		return songlist;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -53,29 +55,29 @@ public class Playlist {
 	public void setPlaylist(HashSet<Song> playlist) {
 		this.songlist = playlist;
 	}
-	
+
 	public void play() throws IOException, URISyntaxException, InterruptedException {
-		for(Song sng: this.songlist) {
+		for (Song sng : this.songlist) {
 			String uri = sng.getLink();
 			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-			    Desktop.getDesktop().browse(new URI(uri));
+				Desktop.getDesktop().browse(new URI(uri));
 			}
 			Thread.sleep(5000);
 		}
 	}
-	
+
 	public void getRandomPlaylist(ArrayList<Song> list, int totalItems) {
-        Random rand = new Random();
-        while(songlist.size() < totalItems) {
-            int randomIndex = rand.nextInt(list.size());
-            songlist.add(list.get(randomIndex));
-        }
-		
+		Random rand = new Random();
+		while (songlist.size() < totalItems) {
+			int randomIndex = rand.nextInt(list.size());
+			songlist.add(list.get(randomIndex));
+		}
+
 	}
 
 	@Override
 	public String toString() {
-		return "Playlist [songlist=" + songlist + ", playListName=" + playListName + ", id=" + id + "]";
+		return "Playlist " + id + ": " + playListName + "\n" + "Songs: " + songlist;
 	}
 
 }

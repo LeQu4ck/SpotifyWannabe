@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
 //import dbPackage.DbCon;
 //import dbPackage.DbInteraction;
 //import dbPackage.IDbInteraction;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 public class SongService implements ISongService {
 
 	private DbCon db = new DbCon();
-	
+
 	public void CreateSong(Song s) throws SQLException {
 		Connection con = db.connect();
 		try {

@@ -14,7 +14,7 @@ public class Song {
 	private String link;
 
 	public Song(int songID, String artist, String title, int duration, String songType, String link) {
-		
+
 		this.songID = songID;
 		this.artist = artist;
 		this.title = title;
@@ -22,9 +22,9 @@ public class Song {
 		this.songType = songType;
 		this.link = link;
 	}
-	
+
 	public Song(String artist, String title, int duration, String songType, String link) {
-		
+
 		this.artist = artist;
 		this.title = title;
 		this.duration = duration;
@@ -149,8 +149,9 @@ public class Song {
 	}
 
 	public boolean validate() {
-		if (validateArtistName(this.getArtist()) && validateTitle(this.getTitle()) && validateDuration(String.valueOf(this.getDuration()))
-				&& validateGenre(this.getSongType()) && validateYtLink(this.getLink())) {
+		if (validateArtistName(this.getArtist()) && validateTitle(this.getTitle())
+				&& validateDuration(String.valueOf(this.getDuration())) && validateGenre(this.getSongType())
+				&& validateYtLink(this.getLink())) {
 			return true;
 		}
 		return false;
@@ -163,8 +164,8 @@ public class Song {
 
 	@Override
 	public String toString() {
-		return "Song  " + songID + ":" + "\n" + "Artist: " + artist + "\n" + "Title: " + title + "\n" + "Duration: " + duration + "\n"
-				+ "Song type: " + songType + "\n" + "Link: " + link;
+		return "Song  " + songID + ":" + "\n" + "Artist: " + artist + "\n" + "Title: " + title + "\n" + "Duration: "
+				+ duration + "\n" + "Song type: " + songType + "\n" + "Link: " + link;
 	}
 
 }
