@@ -12,23 +12,23 @@ import java.util.Random;
 
 public class Playlist {
 	
-	private HashSet<Song> playlist;
+	private HashSet<Song> songlist;
 	private String playListName;
 	private int id;
 
-	public Playlist(String playListName, HashSet<Song> playlist) {
+	public Playlist(String playListName, HashSet<Song> songlist) {
 		super();
-		this.playlist = playlist;
+		this.songlist = songlist;
 		this.playListName = playListName;
 	}
 
-	public Playlist(int id, String playListName, HashSet<Song> playList) {
+	public Playlist(int id, String playListName, HashSet<Song> songlist) {
 		this.id = id;
 		this.playListName = playListName;
-		this.playlist = playList;
+		this.songlist = songlist;
 	}
 	public Playlist() {
-		playlist = new HashSet<Song>();
+		songlist = new HashSet<Song>();
 	}
 
 	public String getPlayListName() {
@@ -39,7 +39,7 @@ public class Playlist {
 	}
 	
 	public HashSet<Song> getPlaylist() {
-		return playlist;
+		return songlist;
 	}
 	
 	public int getId() {
@@ -51,11 +51,11 @@ public class Playlist {
 	}
 
 	public void setPlaylist(HashSet<Song> playlist) {
-		this.playlist = playlist;
+		this.songlist = playlist;
 	}
 	
 	public void play() throws IOException, URISyntaxException, InterruptedException {
-		for(Song sng: this.playlist) {
+		for(Song sng: this.songlist) {
 			String uri = sng.getLink();
 			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
 			    Desktop.getDesktop().browse(new URI(uri));
@@ -66,9 +66,9 @@ public class Playlist {
 	
 	public void getRandomPlaylist(ArrayList<Song> list, int totalItems) {
         Random rand = new Random();
-        while(playlist.size() < totalItems) {
+        while(songlist.size() < totalItems) {
             int randomIndex = rand.nextInt(list.size());
-            playlist.add(list.get(randomIndex));
+            songlist.add(list.get(randomIndex));
         }
 		
 	}

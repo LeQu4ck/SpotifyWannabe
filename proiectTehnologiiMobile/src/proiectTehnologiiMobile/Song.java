@@ -114,7 +114,7 @@ public class Song {
 	}
 
 	public boolean validateDuration(Double s) {
-		String patternString = "^[+]?(0|0?[.]\\d+|[1-9]+([.]\\d+)?)$";
+		String patternString = "^[+]?(0|[1-9]\\d*)?$";
 		Pattern pattern = Pattern.compile(patternString);
 
 		String durata = s.toString();

@@ -1,50 +1,29 @@
 package proiectTehnologiiMobile;
 
-import java.awt.Desktop;
+
 import java.io.IOException;
-import java.net.URI;
 import java.net.URISyntaxException;
-//import java.io.File;
-//import java.util.regex.*;
-//import java.io.File;
-//import java.io.FileNotFoundException;
-//import java.io.FileWriter;
-//import java.io.IOException;
-//import java.io.PrintWriter;
 import java.sql.SQLException;
-//import java.util.ArrayList;
-//import java.util.List;
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Random;
 import java.util.Scanner;
 
 
 public class app implements ISongService {
 
-	/*
-	 * public static HashSet<Song> getRandomElement(ArrayList<Song> list, int
-	 * totalItems) { Random rand = new Random();
-	 * 
-	 * HashSet<Song> newList = new HashSet<>(totalItems); while (newList.size() !=
-	 * totalItems) {
-	 * 
-	 * int randomIndex = rand.nextInt(list.size());
-	 * 
-	 * newList.add(list.get(randomIndex)); } return newList; }
-	 */
 	public static void main(String[] args) throws SQLException, IOException, URISyntaxException, InterruptedException {
 		// TODO Auto-generated method stub
 		Scanner sc1 = new Scanner(System.in);
 		Scanner sc2 = new Scanner(System.in);
 		Scanner randomPlaylist = new Scanner(System.in);
 		
-		ISongService crudFunc = new SongService();
-		
-		Playlist generatedPlaylist = new Playlist();
+		ISongService songService = new SongService();
+		IPlaylistService playlistService =  new PlaylistService();
+					
+		Playlist generatedSongList = new Playlist();
 		ArrayList<Song> songList = new ArrayList<Song>();
 
-		songList = crudFunc.ReadSongs();
+		songList = songService.ReadSongs();
 
 		int function = -2;
 
@@ -58,7 +37,7 @@ public class app implements ISongService {
 			switch (function) {
 
 			case 1:
-				songList = crudFunc.ReadSongs();
+				songList = songService.ReadSongs();
 				for(Song s: songList) {
 					System.out.println(s);
 				}
@@ -67,8 +46,8 @@ public class app implements ISongService {
 			case 2:
 				System.out.println("Alege numarul cantecului pe care vreti sa-l stergeti: ");
 				int songID = sc1.nextInt();
-				crudFunc.DeleteSong(songID);
-				songList = crudFunc.ReadSongs();
+				songService.DeleteSong(songID);
+				songList = songService.ReadSongs();
 				break;
 			case 3:
 				System.out.println("Introduceti artistul:");
@@ -89,7 +68,7 @@ public class app implements ISongService {
 
 				Song s = new Song(artist, title, Integer.parseInt(durata), genre, link);
 				if (s.validate()) {
-					crudFunc.CreateSong(s);
+					songService.CreateSong(s);
 				} else {
 					System.out.println("Verificati valorile introduse!");
 				}
@@ -97,10 +76,16 @@ public class app implements ISongService {
 			case 4:
 				System.out.println("Specificati lungimea playlist-ului ");
 				int numberOfTracks = randomPlaylist.nextInt();
-				generatedPlaylist.getRandomPlaylist(songList, numberOfTracks);
+				
+				System.out.println("Alegeti un nume pentru playlist ");
+				String playlistName = randomPlaylist.nextLine();
+				
+				generatedSongList.getRandomPlaylist(songList, numberOfTracks);
+				playlistService.CreatePlaylist(playlistName, generatedSongList.getPlaylist());
+
 				break;
 			case 5:
-				generatedPlaylist.play();
+				generatedSongList.play();
 				break;
 			case 0:
 				function = 0;
@@ -131,4 +116,5 @@ public class app implements ISongService {
 		// TODO Auto-generated method stub
 
 	}
+
 }
