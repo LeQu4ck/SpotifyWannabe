@@ -7,7 +7,14 @@ import java.util.ArrayList;
 //import java.util.HashSet;
 import java.util.Scanner;
 
-public class app implements ISongService {
+import Interfaces.IPlaylistService;
+import Interfaces.ISongService;
+import Models.Playlist;
+import Models.Song;
+import Services.PlaylistService;
+import Services.SongService;
+
+public class app {
 
 	public static void main(String[] args) throws SQLException, IOException, URISyntaxException, InterruptedException {
 		// TODO Auto-generated method stub
@@ -117,25 +124,7 @@ public class app implements ISongService {
 		sc1.close();
 		sc2.close();
 		randomPlaylist.close();
-
-	}
-
-	@Override
-	public void CreateSong(Song s) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void DeleteSong(int songID) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public ArrayList<Song> ReadSongs() {
-		return null;
-		// TODO Auto-generated method stub
+		scDeletePlaylist.close();
 
 	}
 

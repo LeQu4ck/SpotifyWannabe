@@ -1,4 +1,4 @@
-package proiectTehnologiiMobile;
+package Models;
 
 import java.awt.Desktop;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package proiectTehnologiiMobile;
+package Services;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -8,6 +8,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashSet;
+
+import DBConnection.DbCon;
+import Interfaces.IPlaylistService;
+import Models.Playlist;
+import Models.Song;
 
 public class PlaylistService implements IPlaylistService {
 

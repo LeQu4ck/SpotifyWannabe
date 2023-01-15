@@ -1,7 +1,9 @@
-package proiectTehnologiiMobile;
+package Interfaces;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import Models.Song;
 
 public interface ISongService {
 	void CreateSong(Song s) throws SQLException;

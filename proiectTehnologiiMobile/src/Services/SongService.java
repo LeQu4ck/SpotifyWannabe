@@ -1,4 +1,4 @@
-package proiectTehnologiiMobile;
+package Services;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,6 +8,10 @@ import java.sql.ResultSet;
 //import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import DBConnection.DbCon;
+import Interfaces.ISongService;
+import Models.Song;
 
 //import dbPackage.DbCon;
 //import dbPackage.DbInteraction;
