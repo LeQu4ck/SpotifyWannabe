@@ -9,11 +9,11 @@ public class Song {
 	private int songID;
 	private String artist;
 	private String title;
-	private double duration;
+	private int duration;
 	private String songType;
 	private String link;
 
-	public Song(int songID, String artist, String title, double duration, String songType, String link) {
+	public Song(int songID, String artist, String title, int duration, String songType, String link) {
 		
 		this.songID = songID;
 		this.artist = artist;
@@ -23,7 +23,7 @@ public class Song {
 		this.link = link;
 	}
 	
-	public Song(String artist, String title, double duration, String songType, String link) {
+	public Song(String artist, String title, int duration, String songType, String link) {
 		
 		this.artist = artist;
 		this.title = title;
@@ -64,7 +64,7 @@ public class Song {
 		return duration;
 	}
 
-	public void setDuration(double duration) {
+	public void setDuration(int duration) {
 		this.duration = duration;
 	}
 

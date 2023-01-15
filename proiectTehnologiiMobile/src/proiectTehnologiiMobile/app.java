@@ -19,45 +19,29 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Scanner;
 
-public class app implements ICrudFunctions {
 
-	public static HashSet<Song> getRandomElement(ArrayList<Song> list, int totalItems) {
-		Random rand = new Random();
+public class app implements ISongService {
 
-		HashSet<Song> newList = new HashSet<>(totalItems);
-		while (newList.size() != totalItems) {
-
-			int randomIndex = rand.nextInt(list.size());
-
-			newList.add(list.get(randomIndex));
-		}
-		return newList;
-	}
-	
-//	  public static ArrayList<Song> citireCantece() throws SQLException { 
-//		  ICrudFunctions crudFunc = new CrudFunctions(); 
-//		  ArrayList<Song> songList = new ArrayList<Song>(); 
-//		  songList = crudFunc.ReadSongs();
-//	  return  songList;
-//	 }
-//	  public static void afisareListaCantece() throws SQLException {
-//		  
-//		  ArrayList<Song> songList = citireCantece();
-//		  for(Song s: songList) {
-//			  System.out.println(s);
-//		  }
-//	  }
-//	 
-
+	/*
+	 * public static HashSet<Song> getRandomElement(ArrayList<Song> list, int
+	 * totalItems) { Random rand = new Random();
+	 * 
+	 * HashSet<Song> newList = new HashSet<>(totalItems); while (newList.size() !=
+	 * totalItems) {
+	 * 
+	 * int randomIndex = rand.nextInt(list.size());
+	 * 
+	 * newList.add(list.get(randomIndex)); } return newList; }
+	 */
 	public static void main(String[] args) throws SQLException, IOException, URISyntaxException, InterruptedException {
 		// TODO Auto-generated method stub
 		Scanner sc1 = new Scanner(System.in);
 		Scanner sc2 = new Scanner(System.in);
 		Scanner randomPlaylist = new Scanner(System.in);
 		
-		ICrudFunctions crudFunc = new CrudFunctions();
+		ISongService crudFunc = new SongService();
 		
-		Playlist generatedPlaylist = new Playlist(null);
+		Playlist generatedPlaylist = new Playlist();
 		ArrayList<Song> songList = new ArrayList<Song>();
 
 		songList = crudFunc.ReadSongs();
@@ -103,7 +87,7 @@ public class app implements ICrudFunctions {
 				System.out.println("Introduceti link-ul:");
 				String link = sc2.next();
 
-				Song s = new Song(artist, title, Double.valueOf(durata), genre, link);
+				Song s = new Song(artist, title, Integer.parseInt(durata), genre, link);
 				if (s.validate()) {
 					crudFunc.CreateSong(s);
 				} else {
@@ -113,20 +97,10 @@ public class app implements ICrudFunctions {
 			case 4:
 				System.out.println("Specificati lungimea playlist-ului ");
 				int numberOfTracks = randomPlaylist.nextInt();
-			    generatedPlaylist.setPlaylist(getRandomElement(songList, numberOfTracks));
-				for (Song song : generatedPlaylist.getPlaylist()) {
-					System.out.println(song);
-				}
+				generatedPlaylist.getRandomPlaylist(songList, numberOfTracks);
 				break;
 			case 5:
-				
-				for(Song sng: generatedPlaylist.getPlaylist()) {
-					String uri = sng.getLink();
-					if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-					    Desktop.getDesktop().browse(new URI(uri));
-					}
-					Thread.sleep(5000);
-				}
+				generatedPlaylist.play();
 				break;
 			case 0:
 				function = 0;

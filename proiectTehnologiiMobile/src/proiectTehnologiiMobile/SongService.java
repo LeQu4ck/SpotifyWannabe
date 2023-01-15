@@ -14,10 +14,10 @@ import java.util.ArrayList;
 //import dbPackage.DbInteraction;
 //import dbPackage.IDbInteraction;
 
-public class CrudFunctions implements ICrudFunctions {
+public class SongService implements ISongService {
 
 	private DbCon db = new DbCon();
-
+	
 	public void CreateSong(Song s) throws SQLException {
 		Connection con = db.connect();
 		try {
@@ -62,7 +62,7 @@ public class CrudFunctions implements ICrudFunctions {
 				int songID = set.getInt(1);
 				String artist = set.getString(2);
 				String title = set.getString(3);
-				Double durata = set.getDouble(4);
+				int durata = set.getInt(4);
 				String genre = set.getString(5);
 				String link = set.getString(6);
 
