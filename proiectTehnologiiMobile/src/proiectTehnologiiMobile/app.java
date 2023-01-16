@@ -22,6 +22,7 @@ public class app {
 		Scanner sc2 = new Scanner(System.in);
 		Scanner randomPlaylist = new Scanner(System.in);
 		Scanner scDeletePlaylist = new Scanner(System.in);
+		Scanner scPlay = new Scanner(System.in);
 
 		ISongService songService = new SongService();
 		IPlaylistService playlistService = new PlaylistService();
@@ -91,7 +92,7 @@ public class app {
 				randomPlaylist.nextLine();
 
 				System.out.print("Alegeti un nume pentru playlist ");
-				// randomPlaylist.next();
+
 				String playlistName = randomPlaylist.nextLine();
 
 				generatedSongList.getRandomPlaylist(songList, numberOfTracks);
@@ -100,7 +101,16 @@ public class app {
 				break;
 
 			case 5:
-				generatedSongList.play();
+				System.out.print("Alegeti numarul playlist-ului pe care doriti sa-l ascultati: ");
+				int playlistNb = scPlay.nextInt();
+				scPlay.nextLine();
+
+				for (Playlist p : playLists) {
+					if (p.getId() == playlistNb) {
+
+							p.play();
+					}
+				}
 				break;
 
 			case 6:
@@ -125,6 +135,7 @@ public class app {
 		sc2.close();
 		randomPlaylist.close();
 		scDeletePlaylist.close();
+		scPlay.close();
 
 	}
 

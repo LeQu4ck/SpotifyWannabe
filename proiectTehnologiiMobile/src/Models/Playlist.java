@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 //import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class Playlist {
 
@@ -57,13 +59,27 @@ public class Playlist {
 	}
 
 	public void play() throws IOException, URISyntaxException, InterruptedException {
-		for (Song sng : this.songlist) {
-			String uri = sng.getLink();
-			if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-				Desktop.getDesktop().browse(new URI(uri));
+
+		Executor executor = Executors.newSingleThreadExecutor();
+		executor.execute(() -> {
+			for (Song sng : this.songlist) {
+				String uri = sng.getLink();
+				if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+					try {
+						Desktop.getDesktop().browse(new URI(uri));
+					} catch (IOException | URISyntaxException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				try {
+					Thread.sleep(sng.getDuration() * 1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-			Thread.sleep(5000);
-		}
+		});
 	}
 
 	public void getRandomPlaylist(ArrayList<Song> list, int totalItems) {
